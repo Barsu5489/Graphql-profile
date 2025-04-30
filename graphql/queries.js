@@ -12,3 +12,11 @@ query getUserInfo($name: String!) {
   }
 }
 `;
+const GET_USER_XP = `query xp($name: String!) {
+  xp(where: {user: {login: {_eq: $name}}}) {
+    user {
+      login
+    }
+    amount
+  }
+}`
