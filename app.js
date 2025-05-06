@@ -1,17 +1,18 @@
 document.getElementById('loginBtn').addEventListener('click', async () => {
-
   const username = prompt("Enter your username:");
   const password = prompt("Enter your password:");
   const token = await getJWT(username, password);
-  const result = await graphqlRequest(GET_USER_INFO, token, { name: username });
-console.log(result.data.user[0].login)
 
+  const eventId = 75; // or fetch dynamically if needed
 
-  let userInfo = result.data.user;
-  console.log(result.data.xp);
-  renderUsers(userInfo)
+  const result = await graphqlRequest(GET_USER_INFO, token, { eventId });
+  const userInfo = result.data.user;
+  // console.log(result.data.user[0].login);
+  // console.log(result.data.xp); // if xp is part of your query
 
+  renderUsers(userInfo);
 });
+
 
 // Takes user slices and dynamically renders to DOM
 function renderUsers(userIntel) {
