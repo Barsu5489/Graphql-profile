@@ -1,22 +1,20 @@
 const GET_USER_INFO = `
-query getUserInfo($name: String!) {
-  user(where: {login: {_eq: $name}}) {
-    profile
-    login
-    attrs
-    auditRatio
-    campus
-    totalDown
-    totalUp
-    updatedAt
-  }
-}
-`;
-const GET_USER_XP = `query xp($name: String!) {
-  xp(where: {user: {login: {_eq: $name}}}) {
+  query getUserProfile($eventId: Int!) {
     user {
       login
+      attrs
+      auditRatio
+      transactions(where: {eventId: {_eq: $eventId}}, order_by: {createdAt: asc}) {
+        amount
+        createdAt
+        path
+        type
+      }
+      progresses(where: {eventId: {_eq: $eventId}}, order_by: {createdAt: desc}) {
+        grade
+        path
+        createdAt
+      }
     }
-    amount
   }
-}`
+`;
