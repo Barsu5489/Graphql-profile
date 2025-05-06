@@ -1,16 +1,50 @@
-document.getElementById('loginBtn').addEventListener('click', async () => {
-  const username = prompt("Enter your username:");
-  const password = prompt("Enter your password:");
-  const token = await getJWT(username, password);
+document.getElementById('loginForm').addEventListener('submit', async (event) => {
+  event.preventDefault(); 
 
-  const eventId = 75; // or fetch dynamically if needed
+  // Get the username and password from the form inputs
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
 
-  const result = await graphqlRequest(GET_USER_INFO, token, { eventId });
-  const userInfo = result.data.user;
-  // console.log(result.data.user[0].login);
-  // console.log(result.data.xp); // if xp is part of your query
+  try {
+    // Get the JWT token
+    const token = await getJWT(username, password);
+    localStorage.setItem("authtkn", token); // save token
+    // Fetch eventId dynamically or set it manually
+    const eventId = 75; 
+    // Fetch user info
+    const result = await graphqlRequest(GET_USER_INFO, token, { eventId });
+    const userinfo = result.data.user;
 
-  renderUsers(userInfo);
+ 
+       // Hide login form if token now exists
+    if (localStorage.getItem("auth")) {
+      document.getElementById("loginContainer").style.display = "none";
+      renderUsers(userinfo);
+    }
+ 
+   
+
+    
+
+  } catch (error) {
+    alert("Login failed: " + error.message);
+  }
+});
+document.addEventListener("DOMContentLoaded", async () => {
+  const token = localStorage.getItem("auth");
+  if (token) {
+    document.getElementById("loginContainer").style.display = "none";
+    const eventId = 75;
+    try {
+      const result = await graphqlRequest(GET_USER_INFO, token, { eventId });
+      const userinfo = result.data.user;
+      renderUsers(userinfo);
+    } catch (error) {
+      console.error("Token invalid or expired. Logging out.");
+      localStorage.removeItem("auth");
+      document.getElementById("loginContainer").style.display = "block";
+    }
+  }
 });
 
 
