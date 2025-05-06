@@ -17,6 +17,7 @@ async function getJWT(username, password) {
   async function graphqlRequest(query, token, variables = {}) {
     const auth = localStorage.getItem('auth')
     token = auth
+  
     const res = await fetch('https://learn.zone01kisumu.ke/api/graphql-engine/v1/graphql', {
       method: 'POST',
       headers: {
