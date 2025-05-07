@@ -61,8 +61,11 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
   document.getElementById("logoutBtn").style.display = "none";
 
   // Optionally clear user content
-  const userContent = document.getElementsByClassName("userContainer");
-  if (userContent) userContent.innerHTML = "";
+  const userContainers = document.getElementsByClassName("userContainer");
+  while (userContainers.length > 0) {
+    userContainers[0].remove();
+  }
+
 });
 
 // Takes user slices and dynamically renders to DOM
