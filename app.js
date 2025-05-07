@@ -65,6 +65,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 
   // Hide the logout button
   document.getElementById("logoutBtn").style.display = "none";
+  document.getElementById("profileContainer").style.display = "none"; 
 
   // Optionally clear user content
   const userContainers = document.getElementsByClassName("userContainer");
