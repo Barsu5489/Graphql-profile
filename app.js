@@ -41,12 +41,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("auth");
   if (token) {
     document.getElementById("loginContainer").style.display = "none";
+    document.getElementById("profileContainer").style.display = "block";
     document.getElementById("logoutBtn").style.display = "inline-block";
     const eventId = 75;
     try {
       const result = await graphqlRequest(GET_USER_INFO, token, { eventId });
-      const userinfo = result.data.user;
-      renderUsers(userinfo);
+      if (result.data && result.data.user && result.data.user.length > 0) {
+        renderUserProfile(result.data.user[0]); // Call new rendering function
+      } else {
+        throw new Error("No user data found");
+      }
     } catch (error) {
       console.error("Token invalid or expired. Logging out.");
       localStorage.removeItem("auth");
@@ -77,12 +81,27 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 
 // Takes user slices and dynamically renders to DOM
 function renderUserProfile(userData) {
+  console.log(userData)
+  const filteredData = userData.transactions.filter(entry => {
+    const date = new Date(entry.createdAt);
+    const year = date.getFullYear();
+    const month = date.getMonth(); // 0 = Jan, ..., 3 = April
+  
+    return (
+      year > 2023 &&
+      !(year === 2025 && month === 3) // Exclude April 2025
+    );
+  });
+  console.log(filteredData);
   // Display basic profile information
   document.getElementById('userLogin').textContent = userData.login;
   
   // Calculate total XP
-  const totalXP = userData.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
-  document.getElementById('totalXP').textContent = Math.round(totalXP).toLocaleString() + " XP";
+  const totalXP = filteredData.reduce((sum, transaction) => {
+    return transaction.type === "xp" ? sum + transaction.amount/1000 : sum;
+  }, 0)/1000;
+
+  document.getElementById('totalXP').textContent = Math.round(totalXP).toLocaleString() + " ";
   
   //Display audit ratio
   const auditRatio = parseFloat(userData.auditRatio).toFixed(2);
@@ -98,10 +117,10 @@ function renderUserProfile(userData) {
     document.getElementById('latestProject').textContent = "No projects found";
   }
   
-  // 5. Create XP over time chart
+  // Create XP over time chart
   createXPChart(userData.transactions);
   
-  // 6. Create Project Results chart
+  //  Create Project Results chart
   createProjectResultsChart(userData.progresses);
 }
 
