@@ -15,12 +15,18 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     // Fetch user info
     const result = await graphqlRequest(GET_USER_INFO, token, { eventId });
     const userinfo = result.data.user;
+    console.log(result.data.user[0].transactions)
 
     document.getElementById("loginContainer").style.display = "none";
+    document.getElementById("profileContainer").style.display = "block"; 
     document.getElementById("logoutBtn").style.display = "inline-block";
+
        // Hide login form if token now exists
     if (localStorage.getItem("auth")) {
-      renderUsers(userinfo);
+      console.log(result.data.user[0].transactions)
+      console.log(result.data.user[0].transactions)
+      console.log(userinfo[0])
+      renderUserProfile(userinfo[0]);
     }
  
    
@@ -69,36 +75,28 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 });
 
 // Takes user slices and dynamically renders to DOM
-function renderUsers(userIntel) {
-  const userContainer = document.createElement("div")
-  userContainer.className = "userContainer"
-  userContainer.innerHTML = ""
-  const userItems = userIntel.map(user => 
-    
-    `
-        <li>
-      <h3>${user.attrs.email}</h3>
-      <p>${user.attrs.gender}</p>
-       <p>${user.auditRatio}</p>
-    </li>
-      `).join('')
-  userContainer.innerHTML = userItems
-  document.body.appendChild(userContainer);
+function renderUserProfile(userData) {
+  // Display basic profile information
+  document.getElementById('userLogin').textContent = userData.login;
+  
+  // Calculate total XP
+  const totalXP = userData.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+  document.getElementById('totalXP').textContent = Math.round(totalXP).toLocaleString() + " XP";
+  
+  //Display audit ratio
+  const auditRatio = parseFloat(userData.auditRatio).toFixed(2);
+  document.getElementById('auditRatio').textContent = auditRatio;
+  
+  // Display latest project
+  if (userData.progresses && userData.progresses.length > 0) {
+    const latestProject = userData.progresses[0];
+    const grade = latestProject.grade !== null ? latestProject.grade : "In progress";
+    document.getElementById('latestProject').textContent = 
+      `${latestProject.object.name} (${grade})`;
+  } else {
+    document.getElementById('latestProject').textContent = "No projects found";
+  }
+  
 
 }
 
-function renderXP(xpList) {
-  const xpContainer = document.createElement("div");
-  xpContainer.className = "xpContainer";
-
-  const xpItems = xpList.map(xp => `
-      <li>
-        <strong>User:</strong> ${xp.user.login} <br />
-        <strong>XP:</strong> ${xp.amount}
-      </li>
-    `).join('');
-
-
-  xpContainer.innerHTML = `<ul>${xpItems}</ul>`;
-  document.body.appendChild(xpContainer);
-}
