@@ -56,6 +56,7 @@ export function createProjectResultsChart(progresses) {
       svg.appendChild(passedSlice);
     }
     
+
     // Create fail slice
     if (failed > 0) {
       const failedSlice = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -80,7 +81,69 @@ export function createProjectResultsChart(progresses) {
       failedSlice.setAttribute('fill', '#e74c3c');
       svg.appendChild(failedSlice);
     }
+    if (passed > 0 && failed === 0) {
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circle.setAttribute('cx', centerX);
+  circle.setAttribute('cy', centerY);
+  circle.setAttribute('r', radius);
+  circle.setAttribute('fill', '#27ae60');
+  svg.appendChild(circle);
+
+  // Add percentage text
+  const percentText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  percentText.setAttribute('x', centerX);
+  percentText.setAttribute('y', centerY + 5);
+  percentText.setAttribute('text-anchor', 'middle');
+  percentText.setAttribute('font-weight', 'bold');
+  percentText.setAttribute('fill', '#fff');
+  percentText.textContent = '100%';
+  svg.appendChild(percentText);
+
+      // Add legend
+      const legendY = centerY + radius + 50;
     
+      // Passed legend
+      const passedRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      passedRect.setAttribute('x', centerX - 100);
+      passedRect.setAttribute('y', legendY);
+      passedRect.setAttribute('width', 20);
+      passedRect.setAttribute('height', 20);
+      passedRect.setAttribute('fill', '#27ae60');
+      svg.appendChild(passedRect);
+      
+      const passedText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      passedText.setAttribute('x', centerX - 70);
+      passedText.setAttribute('y', legendY + 15);
+      passedText.textContent = `PASS (${passed})`;
+      svg.appendChild(passedText);
+      
+      // Failed legend
+      const failedRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      failedRect.setAttribute('x', centerX + 50);
+      failedRect.setAttribute('y', legendY);
+      failedRect.setAttribute('width', 20);
+      failedRect.setAttribute('height', 20);
+      failedRect.setAttribute('fill', '#e74c3c');
+      svg.appendChild(failedRect);
+      
+      const failedText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      failedText.setAttribute('x', centerX + 80);
+      failedText.setAttribute('y', legendY + 15);
+      failedText.textContent = `FAIL (${failed})`;
+      svg.appendChild(failedText);
+      
+      // Add title
+      const title = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      title.setAttribute('x', centerX);
+      title.setAttribute('y', 30);
+      title.setAttribute('text-anchor', 'middle');
+      title.setAttribute('font-weight', 'bold');
+      title.textContent = "Project Results: PASS/FAIL Ratio";
+      svg.appendChild(title);
+      
+ 
+  return; // Skip rest of pie logic
+}
     // Add legend
     const legendY = centerY + radius + 50;
     
