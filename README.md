@@ -91,6 +91,8 @@ Development Setup
 
     git clone https://learn.zone01kisumu.ke/git/ebarsula/graphql.git
 
+    cd graphql
+
     Install dependencies:
 
     Install vscode live server
