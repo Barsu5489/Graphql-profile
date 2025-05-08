@@ -97,9 +97,9 @@ function renderUserProfile(userData) {
   document.getElementById('userLogin').textContent = userData.login;
   
   // Calculate total XP
-  const totalXP = filteredData.reduce((sum, transaction) => {
-    return transaction.type === "xp" ? sum + transaction.amount/1000 : sum;
-  }, 0)/1000;
+  const totalXP = userData.transactions.reduce((sum, transaction) => {
+    return transaction.type === "xp" ? sum + transaction.amount : sum;
+  }, 0);
 
   document.getElementById('totalXP').textContent = Math.round(totalXP).toLocaleString() + " ";
   
@@ -118,7 +118,7 @@ function renderUserProfile(userData) {
   }
   
   // Create XP over time chart
-  createXPChart(userData.transactions);
+  createXPChart(filteredData);
   
   //  Create Project Results chart
   createProjectResultsChart(userData.progresses);
