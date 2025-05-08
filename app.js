@@ -34,7 +34,9 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     
 
   } catch (error) {
-    alert("Login failed: " + error.message);
+    document.getElementById("error").textContent = "Invalid email or password. Please try again."
+
+
   }
 });
 document.addEventListener("DOMContentLoaded", async () => {
@@ -81,6 +83,12 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 
 // Takes user slices and dynamically renders to DOM
 function renderUserProfile(userData) {
+  document.getElementById("usernamehead").innerHTML =
+  "Welcome" +
+  "&nbsp;".repeat(3) +
+  userData.attrs.firstName +
+  "&nbsp;".repeat(3) +
+  userData.attrs.lastName;
   console.log(userData)
   const filteredData = userData.transactions.filter(entry => {
     const date = new Date(entry.createdAt);
@@ -92,9 +100,9 @@ function renderUserProfile(userData) {
       !(year === 2025 && month === 3) // Exclude April 2025
     );
   });
-  console.log(filteredData);
   // Display basic profile information
   document.getElementById('userLogin').textContent = userData.login;
+
   
   // Calculate total XP
   const totalXP = userData.transactions.reduce((sum, transaction) => {
@@ -147,7 +155,7 @@ function createXPChart(transactions) {
   });
   
   if (dataPoints.length === 0) {
-    svg.innerHTML = '<text x="400" y="150" text-anchor="middle">No XP data available</text>';
+    svg.innerHTML = '<text x="500" y="190" text-anchor="middle">No XP data available</text>';
     return;
   }
   
