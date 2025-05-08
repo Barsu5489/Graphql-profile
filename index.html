@@ -7,8 +7,11 @@
 </head>
 <body>
   <button id="logoutBtn" style="display: none;">Logout</button>
+<div class="container">
+
 
   <div id="loginContainer">
+    <p id="error"></p>
     <h2>Login</h2>
     <form id="loginForm">
       <div class="form-group">
@@ -21,8 +24,48 @@
       </div>
       <button type="submit" id="loginBtn">Login</button>
     </form>
+    
   </div>
-  <pre id="output"></pre>
+  <div id="profileContainer" class="profile-container">
+    <div class="profile-header">
+      <h1 id="usernamehead"></h1>
+      <button id="logoutBtn">Log Out</button>
+    </div>
+    
+    <div class="profile-info">
+      <h2 id="userLogin">Loading profile...</h2>
+      <div class="profile-stats">
+        <div class="stat-card">
+          <h3>Total XP</h3>
+          <p id="totalXP">Loading...</p>
+        </div>
+        <div class="stat-card">
+          <h3>Audit Ratio</h3>
+          <p id="auditRatio">Loading...</p>
+        </div>
+        <div class="stat-card">
+          <h3>Latest Project</h3>
+          <p id="latestProject">Loading...</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="graph-container">
+      <div class="graph-card">
+        <div class="graph-title">XP Progress Over Time</div>
+        <svg id="xpChart" width="100%" height="300" viewBox="0 0 800 300"></svg>
+      </div>
+      <div class="graph-card">
+        <div class="graph-title">Project Results</div>
+        <svg id="projectChart" width="100%" height="300" viewBox="0 0 800 300"></svg>
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+
+
 
   <script src="graphql/queries.js"></script>
   <script src="utils/auth.js"></script>
