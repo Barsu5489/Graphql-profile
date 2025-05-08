@@ -113,7 +113,7 @@ function renderUserProfile(userData) {
   document.getElementById('totalXP').textContent = Math.round(totalXP).toLocaleString() + " ";
   
   //Display audit ratio
-  const auditRatio = parseFloat(userData.auditRatio).toFixed(2);
+  const auditRatio = parseFloat(userData.auditRatio).toFixed(1);
   document.getElementById('auditRatio').textContent = auditRatio;
   
   // Display latest project
