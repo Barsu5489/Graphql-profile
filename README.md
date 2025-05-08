@@ -82,7 +82,7 @@ query getUserProfile {
 
 The application is hosted online for easy access. Visit the hosted version at:
 
-[Add hosted URL here]
+[YourProfile]](https://barsu5489.github.io/Graphql-profile/)
 
 Development Setup
 
@@ -110,4 +110,3 @@ Development Setup
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).  
 Feel free to use, modify, and contribute to it.
-  
