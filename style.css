@@ -330,7 +330,7 @@ button:hover::after {
   flex-wrap: wrap;
   gap: var(--space-8);
   margin-bottom: var(--space-10);
-  color: var(--text-primary); /* FIXED: Ensuring all text in graph container is light */
+  color: var(--text-primary); /*  Ensuring all text in graph container is light */
 }
 
 /* Graph Card - FIXED for text visibility */
@@ -507,12 +507,12 @@ svg {
   border-radius: var(--radius-lg);
   padding: var(--space-4);
   transition: all var(--transition-normal);
-  color: var(--text-primary); /* FIXED: Ensuring SVG text is light */
+  color: var(--text-primary); 
 }
 
 /* SVG text elements - FIXED for text visibility */
 svg text {
-  fill: var(--text-primary); /* FIXED: Ensuring SVG text elements are light */
+  fill: var(--text-primary); 
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -530,12 +530,12 @@ svg:hover {
   margin-bottom: var(--space-10);
   position: relative;
   overflow: hidden;
-  color: var(--text-primary); /* FIXED: Ensuring all text in chart container is light */
+  color: var(--text-primary); 
 }
 
 /* Ensure all text elements in chart container are visible */
 .chart-container * {
-  color: var(--text-primary); /* FIXED: Ensuring all nested elements have light text */
+  color: var(--text-primary); 
 }
 
 .chart-container::before {
