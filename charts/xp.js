@@ -94,10 +94,10 @@ export function createXPChart(transactions) {
     
     // Add Y-axis labels
     const yLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    yLabel.setAttribute('x', 20);
-    yLabel.setAttribute('y', margin.top + 10);
+    yLabel.setAttribute('x', -10);
+    yLabel.setAttribute('y', margin.top + 60);
     yLabel.setAttribute('text-anchor', 'middle');
-    yLabel.setAttribute('transform', `rotate(-90, 20, ${margin.top + 10})`);
+    yLabel.setAttribute('transform', `rotate(-90, 20, ${margin.top + 30})`);
     yLabel.textContent = "XP";
     svg.appendChild(yLabel);
     
