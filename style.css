@@ -1,46 +1,594 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Analogous color palette - centered around deep blues with purple and teal accents */
+  --color-primary: #3a36e0;         /* Deep blue - primary brand color */
+  --color-primary-light: #4f46e5;   /* Lighter blue variant */
+  --color-primary-dark: #2d31b9;    /* Darker blue variant */
+  --color-secondary: #6366f1;       /* Indigo - secondary color */
+  --color-accent-1: #8b5cf6;        /* Purple - first accent */
+  --color-accent-2: #0ea5e9;        /* Teal - second accent */
+  --color-accent-3: #2563eb;        /* Royal blue - third accent */
+  
+  /* Background colors - dark theme with subtle blue undertones */
+  --bg-primary: #0f172a;            /* Deep blue-black */
+  --bg-secondary: #1e293b;          /* Navy blue-gray */
+  --bg-tertiary: #293548;           /* Lighter navy */
+  --bg-card: #334155;               /* Card background */
+  --bg-input: #1e293b;              /* Input background */
+  --bg-hover: #3f4c6b;              /* Hover state background */
+  
+  /* Text colors - FIXED for visibility */
+  --text-primary: #f8fafc;          /* Primary text - almost white */
+  --text-secondary: #cbd5e1;        /* Secondary text - light gray */
+  --text-muted: #94a3b8;            /* Muted text - medium gray */
+  --text-disabled: #64748b;         /* Disabled text - darker gray */
+  
+  /* Border colors */
+  --border-subtle: rgba(148, 163, 184, 0.1);  /* Very subtle border */
+  --border-light: rgba(148, 163, 184, 0.2);   /* Light border */
+  --border-medium: rgba(148, 163, 184, 0.3);  /* Medium border */
+  --border-focus: rgba(99, 102, 241, 0.6);    /* Focus border */
+  
+  /* Status colors */
+  --success: #10b981;               /* Success green */
+  --warning: #f59e0b;               /* Warning amber */
+  --danger: #ef4444;                /* Danger red */
+  --info: #0ea5e9;                  /* Info blue */
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+  --shadow-focus: 0 0 0 3px rgba(99, 102, 241, 0.4);
+  
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  height: 100%;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: var(--space-6);
+  background-color: var(--bg-primary);
+  color: var(--text-primary); /* Ensuring body text is light on dark background */
+  line-height: 1.6;
+  min-height: 100%;
+  background-image: 
+    radial-gradient(circle at 100% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 25%),
+    radial-gradient(circle at 0% 100%, rgba(139, 92, 246, 0.08) 0%, transparent 25%);
+  background-attachment: fixed;
+  transition: background-color var(--transition-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-4);
+}
+
+/* Login Container */
+.login-container {
+  background-color: var(--bg-secondary);
+  padding: var(--space-8);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  max-width: 400px;
+  margin: var(--space-16) auto;
+}
+#error{
+  color: red;
+}
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Input fields */
+input {
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-5);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-input);
+  color: var(--text-primary); /* Ensuring input text is light */
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-inner);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: var(--shadow-focus);
+  background-color: rgba(99, 102, 241, 0.05);
+}
+
+input::placeholder {
+  color: var(--text-disabled);
+}
+
+/* Buttons */
+button {
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-primary);
+  color: white; /* Button text is white for contrast */
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover {
+  background-color: var(--color-primary-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+button:hover::after {
+  opacity: 1;
+}
+
+/* Profile Container */
+.profile-container {
+  display: none;
+  margin-top: var(--space-10);
+  animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Profile Header */
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-8);
+}
+
+.profile-header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-accent-1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.025em;
+  color: var(--text-primary); /* Fallback if gradient text isn't supported */
+}
+
+/* Profile Info */
+.profile-info {
+  background-color: var(--bg-secondary);
+  padding: var(--space-8);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-10);
+  border: 1px solid var(--border-light);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.profile-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, var(--color-accent-1), var(--color-accent-2));
+}
+
+.profile-info:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.profile-info h2 {
+  color: var(--text-primary); /* Ensuring heading text is light */
+  font-size: 1.5rem;
+  margin-bottom: var(--space-6);
+  font-weight: 600;
+}
+
+/* Profile Stats */
+.profile-stats {
+  display: flex;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.stat-card {
+  flex: 1;
+  background-color: var(--bg-tertiary);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  border-left: 4px solid;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:nth-child(1) {
+  border-left-color: var(--color-secondary);
+}
+
+.stat-card:nth-child(2) {
+  border-left-color: var(--color-accent-1);
+}
+
+.stat-card:nth-child(3) {
+  border-left-color: var(--color-accent-2);
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(255, 255, 255, 0.03), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card:hover::after {
+  opacity: 1;
+}
+
+.stat-card h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary); /* Using lighter color for subheadings */
+  margin-bottom: var(--space-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-card p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary); /* Ensuring stat values are light colored */
+  margin-top: var(--space-2);
+}
+
+/* Graph Container */
+.graph-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin-bottom: var(--space-10);
+  color: var(--text-primary); /* FIXED: Ensuring all text in graph container is light */
+}
+
+/* Graph Card - FIXED for text visibility */
+.graph-card {
+  flex: 1;
+  min-width: 45%;
+  background-color: var(--bg-secondary);
+  padding: var(--space-8);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  color: var(--text-primary); /* FIXED: Ensuring all text in graph card is light */
+}
+
+.graph-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  opacity: 0;
+  background: linear-gradient(to right, var(--color-accent-2), var(--color-accent-3));
+  transition: opacity var(--transition-normal);
+}
+
+.graph-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.graph-card:hover::before {
+  opacity: 1;
+}
+
+/* Graph Title - FIXED for text visibility */
+.graph-title {
+  font-size: 1.125rem;
+  margin-bottom: var(--space-6);
+  color: var(--text-primary); /* FIXED: Ensuring graph titles are light */
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.graph-title::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: var(--space-3);
+  background-color: var(--color-accent-2);
+  border-radius: var(--radius-full);
+}
+
+/* Logout Button */
+#logoutBtn {
+  display: none;
+  background-color: transparent;
+  color: var(--text-secondary); /* Using light color for button text */
+  border: 1px solid var(--border-medium);
+  padding: var(--space-3) var(--space-5);
+  font-size: 0.875rem;
+  border-radius: var(--radius-full);
+  box-shadow: none;
+}
+
+#logoutBtn:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+  border-color: var(--danger);
+  transform: translateY(-1px);
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: var(--space-8);
+  font-style: italic;
+  color: var(--text-muted); /* Using light muted color for loading text */
+}
+
+/* Login Container */
 #loginContainer {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: var(--space-16) auto;
+  padding: var(--space-8);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  background-color: var(--bg-secondary);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+#loginContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, var(--color-secondary), var(--color-accent-1));
+}
+
+#loginContainer h2 {
+  text-align: center;
+  margin-bottom: var(--space-8);
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-accent-1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.025em;
+  color: var(--text-primary); /* Fallback if gradient text isn't supported */
+}
+
+.form-group {
+  margin-bottom: var(--space-6);
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: var(--space-2);
+  color: var(--text-secondary); /* Using light color for form labels */
+  font-size: 0.875rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: var(--space-4) var(--space-5);
+  margin-top: var(--space-2);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-input);
+  color: var(--text-primary); /* Ensuring input text is light */
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: var(--space-4);
+  background: linear-gradient(to right, var(--color-secondary), var(--color-accent-1));
+  color: white; /* Ensuring button text is white for contrast */
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(to right, var(--color-accent-1), var(--color-secondary));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* SVG styling for charts - FIXED for text visibility */
+svg {
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  transition: all var(--transition-normal);
+  color: var(--text-primary); /* FIXED: Ensuring SVG text is light */
+}
+
+/* SVG text elements - FIXED for text visibility */
+svg text {
+  fill: var(--text-primary); /* FIXED: Ensuring SVG text elements are light */
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+svg:hover {
+  background-color: var(--bg-hover);
+}
+
+/* Chart Container - FIXED for text visibility */
+.chart-container {
+  background-color: var(--bg-secondary);
+  padding: var(--space-8);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+  margin-bottom: var(--space-10);
+  position: relative;
+  overflow: hidden;
+  color: var(--text-primary); /* FIXED: Ensuring all text in chart container is light */
+}
+
+/* Ensure all text elements in chart container are visible */
+.chart-container * {
+  color: var(--text-primary); /* FIXED: Ensuring all nested elements have light text */
+}
+
+.chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, var(--color-accent-3), var(--color-accent-1));
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px;
   }
   
-  #loginContainer h2 {
-    text-align: center;
-    margin-bottom: 20px;
+  .profile-stats {
+    flex-direction: column;
   }
   
-  .form-group {
-    margin-bottom: 15px;
+  .graph-container {
+    flex-direction: column;
   }
   
-  .form-group label {
-    display: block;
-    font-weight: bold;
+  .graph-card {
+    min-width: 100%;
   }
-  
-  .form-group input {
+
+  .chart-container svg {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    height: auto;
   }
-  
-  button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+}
+
+/* Advanced hover effects */
+@media (hover: hover) {
+  .profile-info:hover::before,
+  .graph-card:hover::before,
+  .chart-container:hover::before {
+    animation: gradientShift 3s ease infinite;
   }
-  
-  button[type="submit"]:hover {
-    background-color: #45a049;
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
-  
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
